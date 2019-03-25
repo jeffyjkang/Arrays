@@ -46,8 +46,14 @@ void destroy_array(Array *arr)
 {
 
   // Free all elements
-
+  // same as free(arr->elements)?
+  // for (int i = 0; i < arr->count; i++)
+  // {
+  //   free(arr->elements[i]);
+  // }
+  free(arr->elements);
   // Free array
+  free(arr);
 }
 
 /*****
@@ -150,7 +156,7 @@ void arr_print(Array *arr)
   printf("]\n");
 }
 
-// #ifndef TESTING
+#ifndef TESTING
 int main(void)
 {
 
@@ -168,4 +174,4 @@ int main(void)
 
   return 0;
 }
-// #endif
+#endif
