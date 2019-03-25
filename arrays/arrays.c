@@ -23,7 +23,7 @@ Array *create_array(int capacity)
 {
   // Allocate memory for the Array struct
 
-  // for the type Array struct assign array pointer to memory allocation and pass in sizeof Array which allocates enough bytes for the Array
+  // for the type Array struct assign arr pointer to memory allocation and pass in sizeof Array which allocates enough bytes for the Array
   Array *arr = malloc(sizeof(Array));
 
   // Set initial values for capacity and count
@@ -64,12 +64,19 @@ void resize_array(Array *arr)
 {
 
   // Create a new element storage with double capacity
+  // create new elements array pointer, memory allocate double the capacity of arr with char type bytes
+
+  char **new_elements = malloc((arr->capacity * 2) * sizeof(char *));
 
   // Copy elements into the new storage
+  // copy using realloc, arr elements, double capacity of original capacity, enough bytes for char
+  arr->elements = realloc(arr->elements, (arr->capacity * 2) * sizeof(char *));
 
   // Free the old elements array (but NOT the strings they point to)
-
+  free(arr->elements);
   // Update the elements and capacity to new values
+  arr->capacity = arr->capacity * 2;
+  arr->elements = new_elements;
 }
 
 /************************************
