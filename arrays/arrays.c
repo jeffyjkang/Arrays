@@ -150,7 +150,7 @@ void arr_print(Array *arr)
   printf("]\n");
 }
 
-#ifndef TESTING
+// #ifndef TESTING
 int main(void)
 {
 
@@ -168,4 +168,4 @@ int main(void)
 
   return 0;
 }
-#endif
+// #endif
