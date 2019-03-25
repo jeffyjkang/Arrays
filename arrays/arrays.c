@@ -24,19 +24,19 @@ Array *create_array(int capacity)
   // Allocate memory for the Array struct
 
   // for the type Array struct assign array pointer to memory allocation and pass in sizeof Array which allocates enough bytes for the Array
-  Array *array = malloc(sizeof(Array));
+  Array *arr = malloc(sizeof(Array));
 
   // Set initial values for capacity and count
   // asign capacity to the new array's capacity
-  array->capacity = capacity;
+  arr->capacity = capacity;
   // assign 0 to the new array's count
-  array->count = 0;
+  arr->count = 0;
 
   // Allocate memory for elements
   // multiply the capacity to the sizeof char pointer, memory allocate and assign it to the elements array from the newly created array
-  array->elements = malloc(capacity * sizeof(char *));
+  arr->elements = malloc(capacity * sizeof(char *));
   // return array
-  return array;
+  return arr;
 }
 
 /*****
