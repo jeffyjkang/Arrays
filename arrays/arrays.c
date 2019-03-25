@@ -65,17 +65,19 @@ void resize_array(Array *arr)
 
   // Create a new element storage with double capacity
   // create new elements array pointer, memory allocate double the capacity of arr with char type bytes
-
   char **new_elements = malloc((arr->capacity * 2) * sizeof(char *));
 
   // Copy elements into the new storage
   // copy using realloc, arr elements, double capacity of original capacity, enough bytes for char
+  // accepts ptr and size of mem
   arr->elements = realloc(arr->elements, (arr->capacity * 2) * sizeof(char *));
 
   // Free the old elements array (but NOT the strings they point to)
   free(arr->elements);
   // Update the elements and capacity to new values
+  // capacity of arr will now have double capacity
   arr->capacity = arr->capacity * 2;
+  // assign elements to new_elements with double capacity
   arr->elements = new_elements;
 }
 
@@ -99,9 +101,9 @@ char *arr_read(Array *arr, int index)
     printf("Error index is greater than current count");
     return NULL;
   }
-
   // Otherwise, return the element at the given index
-  return arr->elements[index];
+  else
+    return arr->elements[index];
 }
 
 /*****
@@ -111,7 +113,7 @@ void arr_insert(Array *arr, char *element, int index)
 {
 
   // Throw an error if the index is greater than the current count
-  if (arr->count < index)
+  if (index > arr->count)
   {
     printf("error, index is greater than current count");
     exit(1);
@@ -123,8 +125,23 @@ void arr_insert(Array *arr, char *element, int index)
   }
 
   // Move every element after the insert index to the right one position
-
+  // initialize current element pointer at current index
+  char *elem = arr->elements[index];
+  // initialize next element pointer
+  char *next_elem;
+  // start loop at index i, increment i, stop at arr count
+  for (int i = index; i <= arr->count; i++)
+  {
+    // do something
+    // assign the next element pointer to the value of i+1
+    next_elem = arr->elements[i + 1];
+    // assign element pointer to the next value of the elements array
+    arr->elements[i + 1] = elem;
+    // assign current element pointer to next_element pointer
+    elem = next_elem;
+  }
   // Copy the element and add it to the array
+  // assign the value of the element to the elements string at index
   arr->elements[index] = element;
   // Increment count by 1
   arr->count++;
