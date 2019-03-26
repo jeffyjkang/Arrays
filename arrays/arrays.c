@@ -226,7 +226,7 @@ void arr_remove(Array *arr, char *element)
 }
 
 /*****
- * Utility function to print an array.
+ * Utility function to print an array
  *****/
 void arr_print(Array *arr)
 {
