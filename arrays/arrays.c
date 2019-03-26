@@ -47,10 +47,10 @@ void destroy_array(Array *arr)
 
   // Free all elements
   // same as free(arr->elements)?
-  // for (int i = 0; i < arr->count; i++)
-  // {
-  //   free(arr->elements[i]);
-  // }
+  for (int i = 0; i < arr->count; i++)
+  {
+    free(arr->elements[i]);
+  }
   free(arr->elements);
   // Free array
   free(arr);
@@ -70,7 +70,11 @@ void resize_array(Array *arr)
   // Copy elements into the new storage
   // copy using realloc, arr elements, double capacity of original capacity, enough bytes for char
   // accepts ptr and size of mem
-  arr->elements = realloc(arr->elements, (arr->capacity * 2) * sizeof(char *));
+  // arr->elements = realloc(arr->elements, (arr->capacity * 2) * sizeof(char *));
+  for (int i = 0; i < arr->count; i++)
+  {
+    new_elements[i] = arr->elements[i];
+  }
 
   // Free the old elements array (but NOT the strings they point to)
   free(arr->elements);
@@ -95,8 +99,8 @@ void resize_array(Array *arr)
 char *arr_read(Array *arr, int index)
 {
 
-  // Throw an error if the index is greater than the current count
-  if (index > arr->count)
+  // Throw an error if the index is greater or equal than the current count
+  if (index >= arr->count)
   {
     printf("Error index is greater than current count");
     return NULL;
@@ -119,7 +123,7 @@ void arr_insert(Array *arr, char *element, int index)
     exit(1);
   }
   // Resize the array if the number of elements is over capacity
-  if (arr->count > arr->capacity)
+  if (arr->count >= arr->capacity)
   {
     resize_array(arr);
   }
@@ -142,7 +146,8 @@ void arr_insert(Array *arr, char *element, int index)
   }
   // Copy the element and add it to the array
   // assign the value of the element to the elements string at index
-  arr->elements[index] = element;
+  char *dup = strdup(element);
+  arr->elements[index] = dup;
   // Increment count by 1
   arr->count++;
 }
@@ -154,16 +159,16 @@ void arr_append(Array *arr, char *element)
 {
 
   // Resize the array if the number of elements is over capacity
-  if (arr->count > arr->capacity)
+  if (arr->count >= arr->capacity)
   {
     resize_array(arr);
   }
   // or throw an error if resize isn't implemented yet.
-  else
-  {
-    printf("error resize_array hasn't been implemented yet.");
-    exit(1);
-  }
+  // else
+  // {
+  //   printf("error resize_array hasn't been implemented yet.");
+  //   exit(1);
+  // }
 
   // Copy the element and add it to the end of the array
   // initialize copy pointer to string duplicate, pass in element
@@ -191,7 +196,7 @@ void arr_remove(Array *arr, char *element)
   for (int i = 0; i < arr->count; i++)
   {
     // if arr of elements at index i equals passed in element
-    if (arr->elements[i] == element)
+    if (strcmp(arr->elements[i], element) == 0)
     {
       // assign index which is the first occurance of element to i
       index = i;
@@ -201,12 +206,12 @@ void arr_remove(Array *arr, char *element)
       break;
     }
     // if element does not exist
-    else
-    {
-      // error out, exit
-      printf("element does not exist");
-      exit(1);
-    }
+    // else
+    // {
+    //   // error out, exit
+    //   printf("element does not exist");
+    //   exit(1);
+    // }
   }
 
   // Shift over every element after the removed element to the left one position
