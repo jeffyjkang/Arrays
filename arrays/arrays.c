@@ -154,11 +154,24 @@ void arr_append(Array *arr, char *element)
 {
 
   // Resize the array if the number of elements is over capacity
+  if (arr->count > arr->capacity)
+  {
+    resize_array(arr);
+  }
   // or throw an error if resize isn't implemented yet.
+  else
+  {
+    printf("error resize_array hasn't been implemented yet.");
+    exit(1);
+  }
 
   // Copy the element and add it to the end of the array
-
+  // initialize copy pointer to string duplicate, pass in element
+  char *copy = strdup(element);
+  // assign the end of the elements array to copy
+  arr->elements[arr->count] = copy;
   // Increment count by 1
+  arr->count++;
 }
 
 /*****
@@ -176,6 +189,7 @@ void arr_remove(Array *arr, char *element)
   // Shift over every element after the removed element to the left one position
 
   // Decrement count by 1
+  arr->count--;
 }
 
 /*****
