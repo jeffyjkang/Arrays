@@ -185,9 +185,37 @@ void arr_remove(Array *arr, char *element)
 
   // Search for the first occurence of the element and remove it.
   // Don't forget to free its memory!
+  // initialize index;
+  int index;
+  // loop through until arr until end of count, initialize int to 0, increment
+  for (int i = 0; i < arr->count; i++)
+  {
+    // if arr of elements at index i equals passed in element
+    if (arr->elements[i] == element)
+    {
+      // assign index which is the first occurance of element to i
+      index = i;
+      // free memory of elements at index of i
+      free(arr->elements[i]);
+      // break, exit loop, only need to return first occurence
+      break;
+    }
+    // if element does not exist
+    else
+    {
+      // error out, exit
+      printf("element does not exist");
+      exit(1);
+    }
+  }
 
   // Shift over every element after the removed element to the left one position
-
+  // for loop, assign int j to index, loop until count
+  for (int j = index; j < arr->count; j++)
+  {
+    // assign element at j to element at j+1
+    arr->elements[j] = arr->elements[j + 1];
+  }
   // Decrement count by 1
   arr->count--;
 }
